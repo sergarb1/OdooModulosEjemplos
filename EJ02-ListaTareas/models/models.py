@@ -18,9 +18,10 @@ class lista_tareas(models.Model):
     realizada = fields.Boolean()
 
 
-    #Este computo depende de la variable prioridad
+    # Este es un ejemplo de "valor computado." Este computo depende de la variable prioridad.
+    #La dependencia se indica mediante el decorador
     @api.depends('prioridad')
-    #Funcion para calcular el valor de urgente
+    #Funcion para calcular el valor de urgente.
     def _value_urgente(self):
         #Para cada registro
         for record in self:

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id='biblioteca_comic_categoria_action' model='ir.actions.act_window'>
+        <field name="name">Categorias comics</field>
+        <field name="res_model">biblioteca.comic.categoria</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Book Categories" id="biblioteca_comic_categoria_menu" parent="library_base_menu" action="biblioteca_comic_categoria_action"/>
+
+    <!-- Form View -->
+    <record id="biblioteca_comic_categoria_view_form" model="ir.ui.view">
+        <field name="name">Formulario categorias biblioteca</field>
+        <field name="model">biblioteca.comic.categoria</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="parent_id"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="child_ids"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+     <!-- Tree(list) View -->
+    <record id="biblioteca_comic_categoria_view_tree" model="ir.ui.view">
+        <field name="name">Lista de comics de la biblioteca</field>
+        <field name="model">biblioteca.comic.categoria</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
