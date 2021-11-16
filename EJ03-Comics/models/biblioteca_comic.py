@@ -9,38 +9,38 @@ class BaseArchive(models.AbstractModel):
     _name = 'base.archive'
     _description = 'Fichero abstracto'
 
-    active = fields.Boolean(default=True)
+    activo = fields.Boolean(default=True)
 
-    def do_archive(self):
+    def archivar(self):
         for record in self:
-            record.active = not record.active
+            record.activo = not record.activo
 
 
-class Bibliotecacomic(models.Model):
+class BibliotecaComic(models.Model):
     _name = 'biblioteca.comic'
     _inherit = ['base.archive']
 
     _description = 'Comic de biblioteca'
 
-    _order = 'fecha_publicacion desc, name'
+    _order = 'fecha_publicacion desc, nombre'
 
-    name = fields.Char('Titulo', required=True, index=True)
-    short_name = fields.Char('Titulo Corto',translate=True, index=True)
-    notes = fields.Text('Anotaciones Internas')
-    state = fields.Selection(
+    nombre = fields.Char('Titulo', required=True, index=True)
+    nombre_corto = fields.Char('Titulo corto',translate=True, index=True)
+    anotaciones = fields.Text('Anotaciones internas')
+    estado = fields.Selection(
         [('borrador', 'No disponible'),
          ('disponible', 'Disponible'),
          ('perdido', 'Perdido')],
         'State', default="borrador")
-    description = fields.Html('Descripcion', sanitize=True, strip_style=False)
-    cover = fields.Binary('Cubierta Comic')
+    descripcion = fields.Html('Descripcion', sanitize=True, strip_style=False)
+    cubierta = fields.Binary('Cubierta Comic')
     fecha_publicacion = fields.Date('Fecha publicación')
     fecha_actualizacion = fields.Datetime('Última actualización', copy=False)
-    pages = fields.Integer('Numero de páginas',
-        groups='base.group_user',
-        states={'perdido': [('readonly', True)]},
+    paginas = fields.Integer('Numero de páginas',
+        grupos='base.group_user',
+        estados={'perdido': [('readonly', True)]},
         help='Total numero de paginast', company_dependent=False)
-    reader_rating = fields.Float(
+    valoracion_lector = fields.Float(
         'Valoración media lectores',
         digits=(14, 4),  # Precision opcional (total, decimales),
     )
@@ -56,9 +56,9 @@ class Bibliotecacomic(models.Model):
         domain=[],
     )
     
-    ciudad_editorial = fields.Char('Ciudad Editorial', related='publisher_id.city', readonly=True)
+    editorial_ciudad = fields.Char('Ciudad Editorial', related='editorial_id.city', readonly=True)
 
-    category_id = fields.Many2one('biblioteca.comic.categoria')
+    categoria_id = fields.Many2one('biblioteca.comic.categoria')
     anyo_dias = fields.Float(
         string='Dias desde lanzamiento',
         compute='_compute_anyo', inverse='_inverse_anyo', search='_search_anyo',
@@ -73,7 +73,7 @@ class Bibliotecacomic(models.Model):
         models = self.env['ir.model'].search([('field_id.name', '=', 'message_ids')])
         return [(x.model, x.name) for x in models]
 
-    @api.depends('date_release')
+    @api.depends('fecha_publicacion')
     def _compute_anyo(self):
         hoy = fields.Date.today()
         for comic in self:
@@ -87,7 +87,7 @@ class Bibliotecacomic(models.Model):
         hoy = fields.Date.today()
         for comic in self.filtered('fecha_publicacion'):
             d = hoy - timedelta(days=comic.anyo_dias)
-            comic.date_release = d
+            comic.fecha_publicacion = d
 
     def _search_age(self, operator, value):
         hoy = fields.Date.today()
@@ -109,14 +109,14 @@ class Bibliotecacomic(models.Model):
 
     _sql_constraints = [
         ('name_uniq', 'UNIQUE (name)', 'Book title must be unique.'),
-        ('positive_page', 'CHECK(pages>0)', 'No of pages must be positive')
+        ('positive_page', 'CHECK(paginas>0)', 'El comic debe tener al menos una página')
     ]
 
-    @api.constrains('date_release')
+    @api.constrains('fecha_publicacion')
     def _check_release_date(self):
         for record in self:
-            if record.date_release and record.date_release > fields.Date.today():
-                raise models.ValidationError('La fecha de lanzamiento debe estar en el pasado')
+            if record.fecha_publicacion and record.fecha_publicacion > fields.Date.today():
+                raise models.ValidationError('La fecha de lanzamiento debe ser anterior a la actual')
 
 
 class ResPartner(models.Model):
@@ -129,7 +129,7 @@ class ResPartner(models.Model):
         # relation='biblioteca_comic_res_partner_rel'  # opcional
     )
 
-    cuenta_comics = fields.Integer('Number de comics del autor', compute='_compute_cuenta_comics')
+    cuenta_comics = fields.Integer('Numero de Comics del autor', compute='_compute_cuenta_comics')
 
     @api.depends('autores_comics_ids')
     def _compute_cuenta_comics(self):

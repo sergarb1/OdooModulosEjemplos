@@ -10,7 +10,7 @@ class BookCategory(models.Model):
     _parent_store = True
     _parent_name = "parent_id"
 
-    name = fields.Char('Categoria')
+    nombre = fields.Char('Categoria')
     parent_id = fields.Many2one(
         'biblioteca.comic.categoria',
         string='Categoria padre',

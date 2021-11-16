@@ -2,22 +2,22 @@
 <odoo>
 
     <record id='biblioteca_comic_categoria_action' model='ir.actions.act_window'>
-        <field name="name">Categorias comics</field>
+        <field name="name">Categorias Comics</field>
         <field name="res_model">biblioteca.comic.categoria</field>
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Book Categories" id="biblioteca_comic_categoria_menu" parent="library_base_menu" action="biblioteca_comic_categoria_action"/>
+    <menuitem name="Categorias Comics" id="biblioteca_comic_categoria_menu" parent="biblioteca_base_menu" action="biblioteca_comic_categoria_action"/>
 
     <!-- Form View -->
     <record id="biblioteca_comic_categoria_view_form" model="ir.ui.view">
-        <field name="name">Formulario categorias biblioteca</field>
+        <field name="name">Formulario categorias Comics biblioteca</field>
         <field name="model">biblioteca.comic.categoria</field>
         <field name="arch" type="xml">
             <form>
                 <group>
                     <group>
-                        <field name="name"/>
+                        <field name="nombre"/>
                     </group>
                     <group>
                         <field name="parent_id"/>
@@ -32,11 +32,11 @@
 
      <!-- Tree(list) View -->
     <record id="biblioteca_comic_categoria_view_tree" model="ir.ui.view">
-        <field name="name">Lista de comics de la biblioteca</field>
+        <field name="name">Lista de Comics de la biblioteca</field>
         <field name="model">biblioteca.comic.categoria</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
+                <field name="nombre"/>
             </tree>
         </field>
     </record>
