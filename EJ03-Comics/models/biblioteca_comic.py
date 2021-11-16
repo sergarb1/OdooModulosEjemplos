@@ -25,17 +25,17 @@ class BibliotecaComic(models.Model):
     _order = 'fecha_publicacion desc, nombre'
 
     nombre = fields.Char('Titulo', required=True, index=True)
-    nombre_corto = fields.Char('Titulo corto',translate=True, index=True)
-    anotaciones = fields.Text('Anotaciones internas')
     estado = fields.Selection(
         [('borrador', 'No disponible'),
          ('disponible', 'Disponible'),
          ('perdido', 'Perdido')],
-        'State', default="borrador")
-    descripcion = fields.Html('Descripcion', sanitize=True, strip_style=False)
+        'Estado', default="borrador")
+    descripcion = fields.Html('Descripción', sanitize=True, strip_style=False)
     cubierta = fields.Binary('Cubierta Comic')
     fecha_publicacion = fields.Date('Fecha publicación')
     fecha_actualizacion = fields.Datetime('Última actualización', copy=False)
+    
+    precio = fields.Float('Precio')
     paginas = fields.Integer('Numero de páginas',
         grupos='base.group_user',
         estados={'perdido': [('readonly', True)]},
@@ -45,10 +45,7 @@ class BibliotecaComic(models.Model):
         digits=(14, 4),  # Precision opcional (total, decimales),
     )
     autor_ids = fields.Many2many('res.partner', string='Autores')
-    precio_coste = fields.Float('Coste Comic', digits='Precio Comic')
-    currency_id = fields.Many2one('res.currency', string='Currency')
-    retail_price = fields.Monetary('Retail Price') # optional attribute: currency_field='currency_id' incase currency field have another name then 'currency_id'
-
+    
     editorial_id = fields.Many2one('res.partner', string='Editorial',
         # optional:
         ondelete='set null',
@@ -56,8 +53,6 @@ class BibliotecaComic(models.Model):
         domain=[],
     )
     
-    editorial_ciudad = fields.Char('Ciudad Editorial', related='editorial_id.city', readonly=True)
-
     categoria_id = fields.Many2one('biblioteca.comic.categoria')
     anyo_dias = fields.Float(
         string='Dias desde lanzamiento',
@@ -118,23 +113,6 @@ class BibliotecaComic(models.Model):
             if record.fecha_publicacion and record.fecha_publicacion > fields.Date.today():
                 raise models.ValidationError('La fecha de lanzamiento debe ser anterior a la actual')
 
-
-class ResPartner(models.Model):
-    _inherit = 'res.partner'
-
-    editorial_comics_ids = fields.One2many('biblioteca.comic', 'editorial_id', string='Comics editorial')
-    autores_comics_ids = fields.Many2many(
-        'biblioteca.comic',
-        string='Autores de Comics',
-        # relation='biblioteca_comic_res_partner_rel'  # opcional
-    )
-
-    cuenta_comics = fields.Integer('Numero de Comics del autor', compute='_compute_cuenta_comics')
-
-    @api.depends('autores_comics_ids')
-    def _compute_cuenta_comics(self):
-        for r in self:
-            r.cuenta_comics = len(r.autores_comics_ids)
 
 
 class BibliotecaMiembro(models.Model):

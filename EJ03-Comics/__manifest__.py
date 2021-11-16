@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Mi biblioteca",  # Titulo del módulo
+    'name': "Biblioteca Comics",  # Titulo del módulo
     'summary': "Gestionar comics :)",  # Resumen de la funcionaliadad
     'description': """
 Gestor de bibliotecas
 ==============
     """,  
+
+    #Indicamos que es una aplicación
+    'application': True,
     'author': "Sergi García",
     'website': "http://apuntesfpinformatica.es",
     'category': 'Tools',
-    'version': '1.0',
+    'version': '0.1',
     'depends': ['base'],
 
     'data': [
