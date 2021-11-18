@@ -9,7 +9,7 @@
 
     <menuitem name="Categorias Comics" id="biblioteca_comic_categoria_menu" parent="biblioteca_base_menu" action="biblioteca_comic_categoria_action"/>
 
-    <!-- Form View -->
+    <!-- VISTA DE FORMULARIO -->
     <record id="biblioteca_comic_categoria_view_form" model="ir.ui.view">
         <field name="name">Formulario categorias Comics biblioteca</field>
         <field name="model">biblioteca.comic.categoria</field>
@@ -30,7 +30,7 @@
         </field>
     </record>
 
-     <!-- Tree(list) View -->
+     <!-- Vista Tree -->
     <record id="biblioteca_comic_categoria_view_tree" model="ir.ui.view">
         <field name="name">Lista de Comics de la biblioteca</field>
         <field name="model">biblioteca.comic.categoria</field>
