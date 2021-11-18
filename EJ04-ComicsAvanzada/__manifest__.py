@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Biblioteca Comics",  # Titulo del módulo
-    'summary': "Gestionar comics :)",  # Resumen de la funcionaliadad
+    'name': "Biblioteca Comics Avanzada",  # Titulo del módulo
+    'summary': "Gestionar comics :) (Version avanzada)",  # Resumen de la funcionaliadad
     'description': """
-Gestor de bibliotecas
+Gestor de bibliotecas (Version avanzada)
 ==============
     """,  
 
