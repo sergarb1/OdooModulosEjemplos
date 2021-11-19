@@ -7,6 +7,9 @@ class lista_tareas(models.Model):
     #Nombre y descripcion del modelo de datos
     _name = 'lista_tareas.lista'
     _description = 'Modelo de la lista de tareas'
+    #Como no tenemos un atributo "name" en nuestro modelo, indicamos que cuando
+    #se necesite un nombre, se usara el atributo tarea
+    _rec_name="tarea"
 
     #Elementos de cada fila del modelo de datos
     #Los tipos de datos a usar en el ORM son 
