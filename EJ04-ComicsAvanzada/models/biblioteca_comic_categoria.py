@@ -40,6 +40,7 @@ class BookCategory(models.Model):
     child_ids = fields.One2many(
         'biblioteca.comic.categoria', 'parent_id',
         string='Categorias hijas')
+    #Necesario para comprobar la recursion
     parent_path = fields.Char(index=True)
 
     #Decorador para introducir "constraints" https://odoo-development.readthedocs.io/en/latest/dev/py/constraints.html
