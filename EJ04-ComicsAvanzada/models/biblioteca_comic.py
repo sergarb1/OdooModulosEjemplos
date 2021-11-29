@@ -149,7 +149,7 @@ class BibliotecaComic(models.Model):
 
     #Constraints de SQL del modelo
     _sql_constraints = [
-        ('name_uniq', 'UNIQUE (name)', 'El titulo Comic debe ser único.'),
+        ('name_uniq', 'UNIQUE (nombre)', 'El titulo Comic debe ser único.'),
         ('positive_page', 'CHECK(paginas>0)', 'El comic debe tener al menos una página')
     ]
 
