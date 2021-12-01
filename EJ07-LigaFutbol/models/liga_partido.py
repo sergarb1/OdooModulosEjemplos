@@ -50,4 +50,49 @@ class LigaPartido(models.Model):
                 raise models.ValidationError('Los equipos del partido deben ser diferentes')
 
 
-    
+    #API onchange para cuando se modifica un partido
+    #Aunque onchange envia un registro, hacemos codigo para recalcular 
+    #http://www.geninit.cn/developer/reference/orm.html  
+    @api.onchange('equipo_casa', 'goles_casa', 'equipo_fuera', 'goles_fuera')
+    def actualizoRegistrosEquipo(self):
+        #Recorremos partidos y equipos
+        for recordEquipo in self.env['liga.equipo'].search([]):
+            #Como recalculamos todo, ponemos de cada equipo todo a cero
+            recordEquipo.victorias=0
+            recordEquipo.empates=0
+            recordEquipo.derrotas=0
+            recordEquipo.goles_a_favor=0
+            recordEquipo.goles_en_contra=0
+            
+            for recordPartido in self.env['liga.partido'].search([]):  
+        
+                #Si es el equipo de casa
+                if recordPartido.equipo_casa.nombre==recordEquipo.nombre:
+                    
+                    #Miramos si es victoria o derrota
+                    if recordPartido.goles_casa>recordPartido.goles_fuera:
+                        recordEquipo.victorias=recordEquipo.victorias+1
+                    elif recordPartido.goles_casa<recordPartido.goles_fuera:
+                        recordEquipo.derrotas=recordEquipo.derrotas+1
+                    else:
+                        recordEquipo.empates=recordEquipo.empates+1
+                        
+                    #Sumamos goles a favor y en contra
+                    recordEquipo.goles_a_favor=recordEquipo.goles_a_favor+recordPartido.goles_casa
+                    recordEquipo.goles_en_contra=recordEquipo.goles_en_contra+recordPartido.goles_fuera
+
+                #Si es el equipo de fuera
+                if recordPartido.equipo_fuera.nombre==recordEquipo.nombre:
+                    
+                    #Miramos si es victoria o derrota
+                    if recordPartido.goles_casa<recordPartido.goles_fuera:
+                        recordEquipo.victorias=recordEquipo.victorias+1
+                    elif recordPartido.goles_casa>recordPartido.goles_fuera:
+                        recordEquipo.derrotas=recordEquipo.derrotas+1
+                    else:
+                        recordEquipo.empates=recordEquipo.empates+1
+                    
+                    #Sumamos goles a favor y en contra
+                    recordEquipo.goles_a_favor=recordEquipo.goles_a_favor+recordPartido.goles_fuera
+                    recordEquipo.goles_en_contra=recordEquipo.goles_en_contra+recordPartido.goles_casa
+
