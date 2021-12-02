@@ -20,7 +20,10 @@
         'security/ir.model.access.csv',
         'views/liga_equipo.xml',
         'views/liga_equipo_clasificacion.xml',
+        'views/liga_equipo_clasificacion_report.xml',
         'views/liga_partido.xml'
+
+        
     ],
     # Fichero con data de demo si se inicializa la base de datos con "demo data" (No incluido en ejemplo)
     # 'demo': [

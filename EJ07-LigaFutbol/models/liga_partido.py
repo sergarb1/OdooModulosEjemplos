@@ -50,10 +50,11 @@ class LigaPartido(models.Model):
                 raise models.ValidationError('Los equipos del partido deben ser diferentes')
 
 
-    #API onchange para cuando se modifica un partido
-    #Aunque onchange envia un registro, hacemos codigo para recalcular 
-    #http://www.geninit.cn/developer/reference/orm.html  
-    @api.onchange('equipo_casa', 'goles_casa', 'equipo_fuera', 'goles_fuera')
+
+    
+    '''
+    Funcion para actualizar la clasificacion de los equipos, re-calculandola entera
+    '''
     def actualizoRegistrosEquipo(self):
         #Recorremos partidos y equipos
         for recordEquipo in self.env['liga.equipo'].search([]):
@@ -96,3 +97,22 @@ class LigaPartido(models.Model):
                     recordEquipo.goles_a_favor=recordEquipo.goles_a_favor+recordPartido.goles_fuera
                     recordEquipo.goles_en_contra=recordEquipo.goles_en_contra+recordPartido.goles_casa
 
+
+
+    #API onchange para cuando se modifica un partido
+    #Aunque onchange envia un registro, hacemos codigo para recalcular 
+    #http://www.geninit.cn/developer/reference/orm.html  
+    @api.onchange('equipo_casa', 'goles_casa', 'equipo_fuera', 'goles_fuera')
+    def actualizar(self):
+        self.actualizoRegistrosEquipo()
+    
+
+    #Sobreescribo el metodo crear
+    @api.model
+    def create(self, values):
+        #hago lo normal del metodo create
+        result = super().create(values)
+        #Añado esto: llamo a la funcion que actualiza la clasificacion
+        self.actualizoRegistrosEquipo()
+        #hago lo normal del metodo create
+        return result
