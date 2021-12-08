@@ -49,7 +49,8 @@
         <field name="name">Lista de Comics de la biblioteca</field>
         <field name="model">biblioteca.comic.categoria</field>
         <field name="arch" type="xml">
-            <!-- Agrupamos por el atributo "parent_id"-->
+            <!-- Agrupamos las columnas por el atributo "parent_id" para que se agrupen
+            por categorias padre (solo visible bien con categorias padre introducidas) -->
             <kanban default_group_by="parent_id">
                 <!-- Indicamos que atributos usaremos al hacer la vista Kanban -->
                 <field name="nombre" />
