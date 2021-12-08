@@ -73,7 +73,7 @@
                     <t t-name="kanban-box">
                         <div class="o_kanban_image_inner_pic">
                             <field name="nombre" />
-                            <img alt="Avatar" t-att-src="kanban_image('liga.equipo', 'escudo', record.id.raw_value)" style="width:30mm; height:30mm;" />
+                            <img alt="Avatar" t-att-src="kanban_image('liga.equipo', 'escudo', record.id.raw_value)" />
                         </div>
                     </t>
                 </templates>

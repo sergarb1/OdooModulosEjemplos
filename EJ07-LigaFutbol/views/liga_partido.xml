@@ -19,20 +19,15 @@
             <form>
                 <group>
                     <group>
-                        <field name="nombre" />
-                        <field name="disputado" />
-                    </group>
-                   
-                    <group>
                         <field name="equipo_casa" />
                         <field name="goles_casa" />
                     </group>
-                     
+
                     <group>
                         <field name="equipo_fuera" />
                         <field name="goles_fuera" />
                     </group>
-                    
+
                 </group>
             </form>
         </field>
@@ -44,14 +39,12 @@
         <field name="model">liga.partido</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="nombre" />
-                <field name="disputado" />
-                
+                <!-- Indicamos que atributos usaremos al hacer la vista Tree -->
                 <field name="equipo_casa" />
                 <field name="goles_casa" />
                 <field name="equipo_fuera" />
                 <field name="goles_fuera" />
-                
+
             </tree>
         </field>
     </record>
@@ -65,31 +58,39 @@
             <!-- Agrupamos por el atributo "parent_id"-->
             <kanban>
                 <!-- Indicamos que atributos usaremos al hacer la vista Kanban -->
-                <field name="nombre" />
-                <field name="disputado" />
-              
 
                 <field name="equipo_casa" />
                 <field name="goles_casa" />
                 <field name="equipo_fuera" />
                 <field name="goles_fuera" />
-               
+
                 <!-- Plantilla QWeb para indicar como es la tarjeta Kanban-->
+
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_card oe_kanban_global_click">
-
-                            <field name="nombre" />
-                            <field name="disputado" />+
-                            
-                            <field name="equipo_casa" />
-                            <field name="goles_casa" />
-                            <field name="equipo_fuera" />
-                            <field name="goles_fuera" />
-                            
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_card">
+                                    <div class="text-muted">
+                                        <b>
+                                            <p>- Resultado -</p>
+                                        </b>
+                                    </div>
+                                    <div >
+                                        <field name="equipo_casa" /> :
+                                        <field name="goles_casa" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <field name="equipo_fuera" /> :
+                                    <field name="goles_fuera" />
+                                </div>
+                            </div>
+                        
                         </div>
                     </t>
                 </templates>
+
             </kanban>
         </field>
     </record>
