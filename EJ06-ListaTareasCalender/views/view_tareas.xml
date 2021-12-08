@@ -4,7 +4,10 @@
     <record id="tareas_calender_view" model="ir.ui.view">
         <field name="model">project.task</field>
         <field name="arch" type="xml">
-            <!-- Definimos las fechas y color de la vista calendario-->
+            <!-- Definimos las fechas (inicio y final)
+                asi como colo del proyecto para la vista calendario
+                PD: el unico dato obligatorio es "date_start"
+            -->
             <calendar date_start="date_assign" date_stop="date_end" color="project_id">
                 <field name="name" />
                 <field name="user_id" />
@@ -16,7 +19,10 @@
         <field name="name">Mis tareas (Calendario)</field>
         <field name="res_model">project.task</field>
         <field name="view_mode">calendar,tree,form</field>
-        <!-- Indicamos como contexto que la vista de referencia es la vista tareas_calender_view-->
+        <!-- Indicamos como contexto que la vista de referencia es la vista tareas_calender_view
+        mas información en https://www.odoo.com/documentation/15.0/developer/reference/backend/views.html 
+        -->
+        
         <field name="context">{'calendar_view_ref': 'my_project.tareas_calender_view'}</field>
     </record>
 

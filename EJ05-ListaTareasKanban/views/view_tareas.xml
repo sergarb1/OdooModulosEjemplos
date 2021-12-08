@@ -26,7 +26,9 @@
         <field name="name">Mis tareas (Kanban)</field>
         <field name="res_model">project.task</field>
         <field name="view_mode">kanban,tree,form</field>
-        <!-- Indicamos como contexto que la vista de referencia es la vista tareas_kanban_view-->
+        <!-- Indicamos como contexto que la vista de referencia es la vista tareas_kanban_view.
+        mas información en https://www.odoo.com/documentation/15.0/developer/reference/backend/views.html 
+        -->
         <field name="context">{'kanban_view_ref': 'my_project.tareas_kanban_view'}</field>
     </record>
 
