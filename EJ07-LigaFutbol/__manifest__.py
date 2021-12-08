@@ -29,7 +29,8 @@
         #Aqui distintas vistas de equipo (vistas diferentes, mismo modelo)
         'views/liga_equipo.xml',
         'views/liga_equipo_clasificacion.xml',
-        'views/liga_equipo_clasificacion_report.xml',
+        #Vista a un informe
+        'report/liga_equipo_clasificacion_report.xml',
         #Aqui vista sobre los partidos
         'views/liga_partido.xml',
         #Añadimos un Wizard para introducir equipos

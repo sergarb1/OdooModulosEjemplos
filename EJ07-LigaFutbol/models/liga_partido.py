@@ -33,10 +33,7 @@ class LigaPartido(models.Model):
     #Goles equipo de casa
     goles_fuera= fields.Integer()
     
-
-
-
-     #Constraints de atributos
+    #Constraints de atributos
     @api.constrains('equipo_casa')
     def _check_mismo_equipo_casa(self):
         for record in self:

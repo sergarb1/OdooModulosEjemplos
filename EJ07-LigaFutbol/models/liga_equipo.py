@@ -41,7 +41,7 @@ class LigaEquipo(models.Model):
     
 
     #Partidos jugados, ganados, empatados, perdidos
-    victorias=fields.Integer( default=0)
+    victorias=fields.Integer(default=0)
     empates=fields.Integer(default=0)
     derrotas=fields.Integer(default=0)
     
