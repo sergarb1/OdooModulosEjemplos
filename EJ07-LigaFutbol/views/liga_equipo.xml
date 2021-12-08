@@ -5,7 +5,7 @@
         <field name="name">Equipos de la liga</field>
         <field name="res_model">liga.equipo</field>
         <!-- Indicamos que este modelo se puede ver en kanban, tree y form -->
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
     </record>
 
 
@@ -80,5 +80,22 @@
             </kanban>
         </field>
     </record>
+
+
+    <!-- Vista Graph  que muestra información usando como base los puntos-->
+    <record model="ir.ui.view" id="liga_equipo_view_graph">
+        <field name="name">Puntos por equipo</field>
+        <field name="model">liga.equipo</field>
+        <field name="type">graph</field>
+        <field name="arch" type="xml">
+            <!-- Indicamos que cada fila es un equipo y que la medida que los valora son los puntos
+                Con esto conseguimos, por ejemplo, en un pie chart, que cada quesito sea un equipo
+                y el tamaño del quesito sean los puntos -->
+              <graph string="Puntos por equipo">
+                <field name="nombre" group="True" type="row"/>
+                <field name="puntos" group="True" type="measure"/>
+             </graph>
+         </field>
+     </record>
 
 </odoo>
