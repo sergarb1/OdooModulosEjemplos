@@ -5,7 +5,7 @@
     <record id="grupo_bibliotecario" model="res.groups">
         <!-- El field "name" indica como se mostrara en la interfaz. 
             En este caso se verá como "Bibliotecario" -->
-        <field name="name">Biblotecario</field>
+        <field name="name">Bibliotecario</field>
         <!-- El field "users" indica que los usuarios de este grupo se incluyan en este
             grupo de seguirdad. 
             En este caso con "base.user_admin" estamos incluyendo a los administradores --> 
