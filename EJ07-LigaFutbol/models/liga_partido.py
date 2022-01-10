@@ -111,6 +111,14 @@ class LigaPartido(models.Model):
         self.actualizoRegistrosEquipo()
     
 
+    #Sobrescribo el borrado (unlink)
+    def unlink(self):
+        #Borro el registro, que es lo que hace el metodo normalmente
+        result=super(LigaPartido,self).unlink()
+        #Añado que llame a actualizoRegistroEquipo()
+        self.actualizoRegistrosEquipo()
+        return result
+
     #Sobreescribo el metodo crear
     @api.model
     def create(self, values):
