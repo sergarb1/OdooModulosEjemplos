@@ -21,7 +21,7 @@
         #Estos dos primeros ficheros:
         #1) El primero indica grupo de seguridad basado en rol
         #2) El segundo indica la politica de acceso del modelo
-        #Mas información en https://www.odoo.com/documentation/14.0/es/developer/howtos/rdtraining/05_securityintro.html
+        #Mas información en https://www.odoo.com/documentation/17.0/es/developer/howtos/rdtraining/05_securityintro.html
         #Y en www.odoo.yenthevg.com/creating-security-groups-odoo/
         #'security/groups.xml',
         'security/ir.model.access.csv',

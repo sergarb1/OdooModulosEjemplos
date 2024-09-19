@@ -9,7 +9,7 @@ class BookCategory(models.Model):
     _description = 'Categoria de comics de la biblioteca'
 
     #Para guardar lo del padre y acelerar consultas
-    # https://www.odoo.com/documentation/14.0/es/developer/reference/addons/orm.html#odoo.models.BaseModel._parent_store
+    # https://www.odoo.com/documentation/17.0/es/developer/reference/addons/orm.html#odoo.models.BaseModel._parent_store
     _parent_store = True
     #ID que indica el padre de este modelo
     _parent_name = "parent_id"

@@ -2,7 +2,7 @@
   <data>
     <!-- actions opening views on models -->
     <!-- Acciones al abrir las vistas en los modelos 
-    https://www.odoo.com/documentation/14.0/developer/reference/addons/actions.html
+    https://www.odoo.com/documentation/17.0/developer/reference/addons/actions.html
     -->
     <record model="ir.actions.act_window" id="action_lista_tareas">
       <!-- -->

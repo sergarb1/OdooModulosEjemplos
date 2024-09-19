@@ -13,7 +13,7 @@ class lista_tareas(models.Model):
 
     #Elementos de cada fila del modelo de datos
     #Los tipos de datos a usar en el ORM son 
-    # https://www.odoo.com/documentation/14.0/developer/reference/addons/orm.html#fields
+    # https://www.odoo.com/documentation/17.0/developer/reference/addons/orm.html#fields
    
     tarea = fields.Char()
     prioridad = fields.Integer()
