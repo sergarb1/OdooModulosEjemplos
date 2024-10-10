@@ -20,7 +20,7 @@
         <field name="res_model">project.task</field>
         <field name="view_mode">calendar,tree,form</field>
         <!-- Indicamos como contexto que la vista de referencia es la vista tareas_calender_view
-        mas información en https://www.odoo.com/documentation/15.0/developer/reference/backend/views.html 
+        mas información en https://www.odoo.com/documentation/17.0/developer/reference/user_interface/view_records.html 
         -->
         
         <field name="context">{'calendar_view_ref': 'my_project.tareas_calender_view'}</field>
