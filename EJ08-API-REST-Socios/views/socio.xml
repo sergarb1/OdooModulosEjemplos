@@ -1,88 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id='socio_action' model='ir.actions.act_window'>
+    <!-- Acción principal -->
+    <record id="socio_action" model="ir.actions.act_window">
         <field name="name">Listado de socios</field>
         <field name="res_model">socio</field>
-        <!-- Indicamos que este modelo se puede ver en kanban, tree y form -->
-        <field name="view_mode">tree,kanban,form</field>
+        <!-- 🔧 En Odoo 14+ el tipo es 'list' en lugar de 'tree' -->
+        <field name="view_mode">list,kanban,form</field>
     </record>
 
-
-    <menuitem name="Gestión de socios" id="socios_base_menu" />
-    <menuitem name="Socios" id="socio_menu" parent="socios_base_menu" action="socio_action" />
+    <!-- Menús -->
+    <menuitem id="socios_base_menu" name="Gestión de socios" />
+    <menuitem id="socio_menu" name="Socios" parent="socios_base_menu" action="socio_action" />
 
     <!-- Vista formulario -->
-    
     <record id="socio_view_form" model="ir.ui.view">
-        <field name="name">Formulario de equipo de futbol</field>
+        <field name="name">Formulario de socio</field>
         <field name="model">socio</field>
         <field name="arch" type="xml">
             <form>
-               <group>
+                <sheet>
                     <group>
-                        <field name="num_socio" />
-                        <field name="nombre" />
-                        <field name="apellidos" />
+                        <group>
+                            <field name="num_socio"/>
+                            <field name="nombre"/>
+                            <field name="apellidos"/>
+                        </group>
+                        <group>
+                            <field name="foto" widget="image" class="oe_avatar"/>
+                            <field name="barcode_carnet" widget="image" class="oe_avatar"/>
+                        </group>
                     </group>
-                    
-                    <group>
-                        <field name="foto" widget="image" class="oe_avatar" />
-                        <field name="barcode_carnet" widget="image" class="oe_avatar"/>
-                    </group>
-                </group>
+                </sheet>
             </form>
         </field>
     </record>
--->
-    <!-- Tree(list) View -->
-    <record id="socio_view_tree" model="ir.ui.view">
-        <field name="name">Lista de Socios</field>
+
+    <!-- Vista lista (antes 'tree') -->
+    <record id="socio_view_list" model="ir.ui.view">
+        <field name="name">Lista de socios</field>
         <field name="model">socio</field>
         <field name="arch" type="xml">
-            <tree>
-                <field name="num_socio" />
-                <field name="nombre" />
-                <field name="apellidos" />
-            </tree>
+            <list>
+                <field name="num_socio"/>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+            </list>
         </field>
     </record>
 
-    <!-- Vista busqueda-->
+    <!-- Vista búsqueda -->
     <record id="socio_view_search" model="ir.ui.view">
-        <field name="name">Búsqueda de Socio por nombre</field>
+        <field name="name">Búsqueda de socios</field>
         <field name="model">socio</field>
         <field name="arch" type="xml">
             <search>
-                <field name="num_socio" />
-                <field name="nombre" />
-                <field name="apellidos" />
+                <field name="num_socio"/>
+                <field name="nombre"/>
+                <field name="apellidos"/>
             </search>
         </field>
     </record>
 
-
-    <!-- Vista Kanban -->
+    <!-- Vista kanban -->
     <record id="socio_view_kanban" model="ir.ui.view">
-        <field name="name">Lista de Socios</field>
+        <field name="name">Kanban de socios</field>
         <field name="model">socio</field>
         <field name="arch" type="xml">
-            <!-- Agrupamos por el atributo "parent_id"-->
             <kanban>
-                <!-- Indicamos que atributos usaremos al hacer la vista Kanban -->
-
-                <field name="id" />
-                <field name="num_socio" />
-                <field name="nombre" />
-                <field name="apellidos" />
+                <field name="id"/>
+                <field name="num_socio"/>
+                <field name="nombre"/>
+                <field name="apellidos"/>
                 <field name="foto"/>
-                <!-- Plantilla QWeb para indicar como es la tarjeta Kanban-->
+
                 <templates>
                     <t t-name="kanban-box">
                         <div class="o_kanban_image_inner_pic">
-                            <field name="num_socio" />
-                            <field name="nombre" />
-                            <field name="apellidos" />
+                            <field name="num_socio"/>
+                            <field name="nombre"/>
+                            <field name="apellidos"/>
                             <img alt="Avatar" t-att-src="kanban_image('socio', 'foto', record.id.raw_value)" />
                         </div>
                     </t>

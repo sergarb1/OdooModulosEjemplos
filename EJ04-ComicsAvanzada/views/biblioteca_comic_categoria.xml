@@ -1,68 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id='biblioteca_comic_categoria_action' model='ir.actions.act_window'>
-        <field name="name">Categorias Comics</field>
-        <!-- Indicamos vistas para este modelo (categoria) -->
+    <!-- ======================================================
+         Acción para acceder a categorías desde el menú
+         ====================================================== -->
+    <record id="action_biblioteca_categoria" model="ir.actions.act_window">
+        <field name="name">Categorías</field>
         <field name="res_model">biblioteca.comic.categoria</field>
-        <!-- Indicamos que este modelo se puede ver en kanban, tree y form -->
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem name="Categorias Comics" id="biblioteca_comic_categoria_menu" parent="biblioteca_base_menu" action="biblioteca_comic_categoria_action" />
+    <!-- ======================================================
+         Menú que muestra las categorías
+         ====================================================== -->
+    <menuitem id="menu_categoria"
+              name="Categorías"
+              parent="biblioteca_base_menu"
+              action="action_biblioteca_categoria" />
 
-    <!-- VISTA DE FORMULARIO -->
-    <record id="biblioteca_comic_categoria_view_form" model="ir.ui.view">
-        <field name="name">Formulario categorias Comics biblioteca</field>
+    <!-- ======================================================
+         Vista FORMULARIO de la categoría
+         ====================================================== -->
+    <record id="view_form_categoria" model="ir.ui.view">
+        <field name="name">Categoría Formulario</field>
         <field name="model">biblioteca.comic.categoria</field>
         <field name="arch" type="xml">
-            <form>
+            <form string="Categoría de Cómic">
                 <group>
-                    <group>
-                        <field name="nombre" />
-                    </group>
-                    <group>
-                        <field name="parent_id" />
-                    </group>
-                </group>
-                <group>
-                    <field name="child_ids" />
+                    <field name="nombre"/>
+                    <field name="descripcion"/>
                 </group>
             </form>
         </field>
     </record>
 
-    <!-- Vista Tree -->
-    <record id="biblioteca_comic_categoria_view_tree" model="ir.ui.view">
-        <field name="name">Lista de Comics de la biblioteca</field>
+    <!-- ======================================================
+         Vista LISTA de las categorías (antes: tree ❌, ahora: list ✅)
+         ====================================================== -->
+    <record id="view_tree_categoria" model="ir.ui.view">
+        <field name="name">Categoría Lista</field>
         <field name="model">biblioteca.comic.categoria</field>
         <field name="arch" type="xml">
-            <tree>
-                <field name="nombre" />
-            </tree>
-        </field>
-    </record>
-
-
-    <!-- Vista Kanban -->
-    <record id="biblioteca_comic_categoria_view_kanban" model="ir.ui.view">
-        <field name="name">Lista de Comics de la biblioteca</field>
-        <field name="model">biblioteca.comic.categoria</field>
-        <field name="arch" type="xml">
-            <!-- Agrupamos las columnas por el atributo "parent_id" para que se agrupen
-            por categorias padre (solo visible bien con categorias padre introducidas) -->
-            <kanban default_group_by="parent_id">
-                <!-- Indicamos que atributos usaremos al hacer la vista Kanban -->
-                <field name="nombre" />
-                <!-- Plantilla QWeb para indicar como es la tarjeta Kanban-->
-                <templates>
-                    <t t-name="kanban-box">
-                        <div class="oe_kanban_card oe_kanban_global_click">
-                            <field name="nombre" />
-                        </div>
-                    </t>
-                </templates>
-            </kanban>
+            <list>
+                <field name="nombre"/>
+                <field name="descripcion"/>
+            </list>
         </field>
     </record>
 

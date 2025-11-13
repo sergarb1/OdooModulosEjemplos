@@ -1,36 +1,53 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Biblioteca Comics Avanzada",  # Titulo del módulo
-    'summary': "Gestionar comics :) (Version avanzada)",  # Resumen de la funcionaliadad
-    'description': """
-Gestor de bibliotecas (Version avanzada)
-==============
-    """,  
+    # ===============================
+    # Información básica del módulo
+    # ===============================
+    'name': "Biblioteca Comics",  # Título que verá el usuario
+    'summary': "Gestión de cómics con categorías y autores",  # Resumen corto
 
-    #Indicamos que es una aplicación
-    'application': True,
+    'description': """
+Gestor de Biblioteca de Cómics
+-------------------------------------------------
+- Crea, clasifica y gestiona cómics.
+- Soporte para jerarquías de categorías.
+- Relación con autores (partners).
+- Sistema de archivado lógico.
+- Cómputo de días desde lanzamiento.
+    """,
+
     'author': "Sergi García",
     'website': "http://apuntesfpinformatica.es",
-    'category': 'Tools',
-    'version': '0.1',
-    'depends': ['base'],
+    'category': 'Tools',   # Categoría donde se clasifica en la app store de Odoo
+    'version': '0.1',      # Versión de desarrollo inicial
 
+    # ===============================
+    # Indicamos que es una aplicación completa
+    # ===============================
+    'application': True,
+
+    # ===============================
+    # Dependencias: otros módulos que deben estar instalados
+    # ===============================
+    'depends': ['base'],  # Módulo base de Odoo
+
+    # ===============================
+    # Archivos cargados con el módulo
+    # ===============================
     'data': [
-       
-        #Estos dos primeros ficheros:
-        #1) El primero indica grupo de seguridad basado en rol
-        #2) El segundo indica la politica de acceso del modelo
-        #Mas información en https://www.odoo.com/documentation/17.0/es/developer/howtos/rdtraining/05_securityintro.html
-        #Y en www.odoo.yenthevg.com/creating-security-groups-odoo/      
-        'security/groups.xml',
-        'security/ir.model.access.csv',
-        
-        #Cargamos los ficheros con vistas tanto de biblioteca_comic como de biblioteca_comic_categoria
+        # -----------------------------------------
+        # Seguridad: primero se cargan los permisos
+        # -----------------------------------------
+        'security/ir.model.access.csv',     # Permisos de acceso a los modelos
+
+        # -----------------------------------------
+        # Vistas del modelo biblioteca.comic
+        # -----------------------------------------
         'views/biblioteca_comic.xml',
-        'views/biblioteca_comic_categoria.xml'
+
+        # -----------------------------------------
+        # Vistas del modelo biblioteca.comic.categoria
+        # -----------------------------------------
+        'views/biblioteca_comic_categoria.xml',
     ],
-    # Fichero con data de demo si se inicializa la base de datos con "demo data" (No incluido en ejemplo)
-    # 'demo': [
-    #     'demo.xml'
-    # ],
 }

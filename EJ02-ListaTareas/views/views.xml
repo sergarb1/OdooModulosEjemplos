@@ -1,52 +1,128 @@
+<!-- Declaración del archivo XML principal de vistas -->
 <odoo>
   <data>
-    <!-- actions opening views on models -->
-    <!-- Acciones al abrir las vistas en los modelos 
-    https://www.odoo.com/documentation/17.0/developer/reference/addons/actions.html
+
+    <!-- ==================================================
+         ACCIÓN PRINCIPAL DEL MÓDULO
+         ===================================================
+         Esta acción es la que se ejecutará cuando el usuario 
+         entre en el menú "Ver tareas".
+         Abre el modelo lista_tareas.lista mostrando sus vistas.
     -->
     <record model="ir.actions.act_window" id="action_lista_tareas">
-      <!-- -->
-      <field name="name">Listado de tareas pendientes</field>
-      <!-- Nombre del modelo que mostraremos en la vista-->
+      <!-- Título visible de la ventana -->
+      <field name="name">Listado de tareas</field>
+
+      <!-- Modelo al que se refiere la acción -->
       <field name="res_model">lista_tareas.lista</field>
-      <!-- indicamos que nuestro formulario tendrá vista tree (para mostrar todos los datos
-      y vista form (para crear o editar datos)
-      La vista Form no la definimos, por lo cual tendremos la version automatica.
-      La vista tree la definiremos mas abajo.
-      -->
-      <field name="view_mode">tree,form</field>
+
+      <!-- Tipo de vistas que se mostrarán:
+           list → vista en tabla
+           form → vista en formulario -->
+      <field name="view_mode">list,form</field>
     </record>
 
-
-    <!-- Top menu item 
-    En este ejemplo, todo el menu de "menuitem" esta puesto como ejemplo, no hace una función concreta
+    <!-- ==================================================
+         MENÚS DEL MÓDULO
+         ===================================================
+         Creamos la estructura jerárquica de menús en Odoo.
+         Esto permite al usuario acceder a las vistas.
     -->
-    <menuitem name="Listado de tareas" id="lista_tareas_menu_root" />
 
-    <!-- menu categories -->
-    <menuitem name="Opciones Lista Tareas" id="lista_tareas_menu_1" parent="lista_tareas_menu_root" />
+    <!-- Menú raíz que aparece en la barra superior -->
+    <menuitem id="lista_tareas_menu_root" name="Listado de tareas" sequence="10"/>
 
-    <!-- actions -->
-    <menuitem name="Mostrar lista" id="lista_tareas_menu_1_list" parent="lista_tareas_menu_1" action="action_lista_tareas" />
+    <!-- Submenú dentro del menú raíz.
+         Permite agrupar más opciones si lo necesitas en el futuro. -->
+    <menuitem id="lista_tareas_menu_1" name="Gestión de tareas"
+              parent="lista_tareas_menu_root" sequence="20"/>
 
+    <!-- Opción final de menú que ejecuta la acción definida arriba.
+         Abre la interfaz con lista y formulario de tareas. -->
+    <menuitem id="lista_tareas_menu_1_list" name="Ver tareas"
+              parent="lista_tareas_menu_1" action="action_lista_tareas" sequence="30"/>
 
-    <!-- Odoo puede colocar vistas automaticas, aunque con un aspecto y funcionalidad mejorable
-    Nosotros, para afinarlo, explicaremos de manera explicita como es cada vista -->
+    <!-- ==================================================
+         VISTA DE LISTA (list)
+         ===================================================
+         Muestra las tareas en forma de tabla.
+         Es la vista que se usa por defecto para ver varios registros.
+    -->
+    <record id="view_lista_tareas_list" model="ir.ui.view">
+      <!-- Nombre interno de la vista -->
+      <field name="name">lista.tareas.list</field>
 
-    <!-- Definimos como es la vista explicita de la lista-->
-    <record model="ir.ui.view" id="lista_tareas">
-      <field name="name">Lista de tareas</field>
+      <!-- Modelo al que pertenece esta vista -->
       <field name="model">lista_tareas.lista</field>
+
+      <!-- Estructura XML de la vista -->
       <field name="arch" type="xml">
-        <tree>
-          <field name="tarea" />
-          <field name="prioridad" />
-          <field name="urgente" />
-          <field name="realizada" />
-        </tree>
+        <!-- Vista tipo list (reemplaza a <tree> en Odoo 17+) -->
+        <list string="Tareas" default_order="prioridad desc">
+          <!-- Campos que se muestran como columnas -->
+          <field name="tarea"/>         <!-- Nombre de la tarea -->
+          <field name="prioridad"/>     <!-- Nivel de prioridad -->
+          <field name="urgente"/>       <!-- Calculado automáticamente -->
+          <field name="realizada"/>     <!-- Estado de finalización -->
+        </list>
       </field>
     </record>
 
+    <!-- ==================================================
+         VISTA DE FORMULARIO (form)
+         ===================================================
+         Se usa al crear o editar una tarea.
+         Más amigable y detallada que la vista de lista.
+    -->
+    <record id="view_lista_tareas_form" model="ir.ui.view">
+      <field name="name">lista.tareas.form</field>
+      <field name="model">lista_tareas.lista</field>
+      <field name="arch" type="xml">
+        <form string="Tarea">
+          <!-- El contenedor visual principal del formulario -->
+          <sheet>
+            <!-- Primer bloque de campos (agrupados) -->
+            <group>
+              <field name="tarea"/>         <!-- Campo de nombre de tarea -->
+              <field name="realizada"/>     <!-- Campo para marcar como realizada -->
+            </group>
+
+            <!-- Segundo bloque de campos (prioridad y urgencia) -->
+            <group string="Prioridad y urgencia">
+              <field name="prioridad"/>     <!-- Campo de prioridad editable -->
+
+              <!-- Campo calculado: no editable. Ya no usamos attrs (Odoo 17+) -->
+              <field name="urgente" readonly="1"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- ==================================================
+         VISTA DE BÚSQUEDA (search)
+         ===================================================
+         Aparece como la barra superior de búsqueda en la vista de lista.
+         Permite buscar y filtrar tareas por varios criterios.
+    -->
+    <record id="view_lista_tareas_search" model="ir.ui.view">
+      <field name="name">lista.tareas.search</field>
+      <field name="model">lista_tareas.lista</field>
+      <field name="arch" type="xml">
+        <search string="Buscar tareas">
+
+          <!-- Campo de búsqueda libre -->
+          <field name="tarea"/>
+
+          <!-- Filtros predefinidos -->
+          <filter name="filtro_urgente" string="Urgente"
+                  domain="[('urgente','=',True)]"/>
+
+          <filter name="filtro_realizada" string="Realizadas"
+                  domain="[('realizada','=',True)]"/>
+        </search>
+      </field>
+    </record>
 
   </data>
 </odoo>

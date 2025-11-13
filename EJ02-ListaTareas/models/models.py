@@ -1,39 +1,43 @@
 # -*- coding: utf-8 -*-
 
+# Importamos los módulos necesarios de Odoo para definir modelos
 from odoo import models, fields, api
 
-#Definimos el modelo de datos
-class lista_tareas(models.Model):
-    #Nombre y descripcion del modelo de datos
+# Creamos nuestro modelo de datos principal.
+# Todos los modelos de Odoo deben heredar de models.Model
+class ListaTareas(models.Model):  # Buenas prácticas: nombres de clase en PascalCase (MayúsculaInicial)
+    
+    # Nombre técnico del modelo. Es como Odoo lo guarda internamente en la base de datos
     _name = 'lista_tareas.lista'
+
+    # Descripción que aparece en la documentación y ayuda
     _description = 'Modelo de la lista de tareas'
-    #Como no tenemos un atributo "name" en nuestro modelo, indicamos que cuando
-    #se necesite un nombre, se usara el atributo tarea
-    _rec_name="tarea"
 
-    #Elementos de cada fila del modelo de datos
-    #Los tipos de datos a usar en el ORM son 
-    # https://www.odoo.com/documentation/17.0/developer/reference/addons/orm.html#fields
-   
-    tarea = fields.Char()
-    prioridad = fields.Integer()
-    #Indicamos que este valor es computado y se computara con la funcion "_value_urgente"
-    #Con store=True indicamos que pese a ser computado, cada vez que se compute se guarde en la base de datos
-    #esto se hace para que podamos utilizar el campo en busquedas, filtrados y ordenaciones
-    urgente = fields.Boolean(compute="_value_urgente", store=True)
-    realizada = fields.Boolean()
+    # Indica qué campo se mostrará por defecto como nombre del registro (en vistas y menús desplegables)
+    _rec_name = "tarea"
 
+    # Definimos los campos (atributos) que tendrá cada registro de este modelo:
 
-    #Este es un ejemplo de "valor computado." Este computo depende de la variable prioridad.
-    #La dependencia se indica mediante el decorador
+    # Campo de tipo texto (cadena). Será el nombre de la tarea.
+    tarea = fields.Char(string="Tarea")
+
+    # Campo de tipo entero. Se usará para indicar la prioridad (ej: 1 a 100)
+    prioridad = fields.Integer(string="Prioridad")
+
+    # Campo calculado de tipo booleano. Será True si la prioridad > 10
+    # compute indica el método que lo calcula
+    # store=True guarda el valor en la base de datos para poder filtrar y ordenar por él
+    urgente = fields.Boolean(string="Urgente", compute="_value_urgente", store=True)
+
+    # Campo booleano normal. Será marcado si la tarea ya se realizó.
+    realizada = fields.Boolean(string="Realizada")
+
+    # -------------------------------
+    # MÉTODO COMPUTADO
+    # -------------------------------
+    # Este método se ejecuta cada vez que cambie el campo 'prioridad'
     @api.depends('prioridad')
-    #Funcion para calcular el valor de urgente.
-    #Recibe "self" que se refiere al modelo completo (no a un registro solo)
     def _value_urgente(self):
-        #Para cada registro... (recordamos, self es el modelo, no un registro)
         for record in self:
-            #Si la prioridad es mayor que 10, se considera urgente, en otro caso no lo es
-            if record.prioridad>10:
-                record.urgente = True
-            else:
-                record.urgente = False
+            # Si la prioridad es mayor que 10, se considera urgente
+            record.urgente = record.prioridad > 10

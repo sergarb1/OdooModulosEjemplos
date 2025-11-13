@@ -1,44 +1,58 @@
 # -*- coding: utf-8 -*-
-from datetime import timedelta
-
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+# ------------------------------------------------------------------------------
+# MODELO SOCIO
+# Este modelo almacena información de los socios de una organización.
+# ------------------------------------------------------------------------------
 
-
-#Definimos modelo Liga Equipo, que almacenara información de cada equipo
 class Socio(models.Model):
+    _name = 'socio'  # Nombre técnico del modelo
+    _description = 'Modelo para almacenar socios'
+    _order = 'nombre'  # Orden por defecto al listar los registros
 
-    #Nombre y descripcion del modelo
-    _name = 'socio'
+    # ---------------------------------------------
+    # _rec_name indica qué campo se mostrará como nombre del registro
+    # en los campos many2one y listas desplegables.
+    # ---------------------------------------------
+    _rec_name = 'nombre'  # Usamos 'nombre' como identificador legible
 
-    _description = 'Modelo par almacenar socios'
+    # ---------------------------------------------
+    # DEFINICIÓN DE CAMPOS
+    # ---------------------------------------------
 
-    #Parametros de ordenacion por defecto
-    _order = 'nombre'
+    # Número único de socio (clave externa lógica, no técnica)
+    num_socio = fields.Integer("Número de socio", required=True)
 
-    #ATRIBUTOS
+    # Nombre del socio
+    nombre = fields.Char("Nombre", required=True, index=True)
 
-    #PARA CUANDO NO HAY UN ATRIBUTO LLAMADO NAME PARA MOSTRAR NOMBRE DE UN REGISTRO
-    # https://www.odoo.com/es_ES/forum/ayuda-1/how-defined-display-name-in-custom-many2one-91657
-    
-    #Indicamos que atributo sera el que se usara para mostrar nombre.
-    #Por defecto es "name", pero si no hay un atributo que se llama name, aqui lo indicamos
-    #Aqui indicamos que se use el atributo "nombre"
-    _rec_name = 'nombre'
+    # Apellidos del socio
+    apellidos = fields.Char("Apellidos", required=True, index=True)
 
+    # Imagen de perfil del socio
+    foto = fields.Image("Foto del socio", max_width=100, max_height=100)
 
-    num_socio= fields.Integer("Numero de socio")
-    #Atributo nombre
-    nombre = fields.Char('Nombre socio', required=True, index=True)
-    apellidos = fields.Char('Apellidos socio', required=True, index=True)
-    #Imagen (indicaremos en la vista como mostrarlo)
-    foto = fields.Image('Foto socio',max_width=100,max_height=100)
+    # Imagen del código de barras del carnet
+    barcode_carnet = fields.Image("Código de barras del carnet", max_width=100, max_height=100)
 
-    #Imagen (indicaremos en la vista como mostrarlo)
-    barcode_carnet = fields.Image('Barcode carnet',max_width=100,max_height=100)
-
-    #Constraints de SQL del modelo
+    # ---------------------------------------------
+    # CONSTRAINTS DE BASE DE DATOS (nivel SQL)
+    # ---------------------------------------------
     _sql_constraints = [
-        ('socio_uniq', 'UNIQUE (num_socio)', 'El numero de socio debe ser unico.')
+        (
+            'socio_uniq',               # Nombre de la constraint
+            'UNIQUE (num_socio)',      # Regla SQL: num_socio debe ser único
+            'El número de socio debe ser único.'  # Mensaje de error en caso de conflicto
+        ),
     ]
+
+    # ---------------------------------------------
+    # VALIDACIONES ADICIONALES (opcional)
+    # Puedes agregar validaciones personalizadas aquí con @api.constrains
+    # ---------------------------------------------
+    # @api.constrains('nombre', 'apellidos')
+    # def _check_nombre_apellidos(self):
+    #     if not self.nombre or not self.apellidos:
+    #         raise ValidationError("Debe completar nombre y apellidos.")

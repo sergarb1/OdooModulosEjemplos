@@ -1,35 +1,49 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-  # Indicamos que este archivo puede contener caracteres especiales como acentos
+
 {
+    # Nombre del módulo que aparecerá en la vista de aplicaciones de Odoo
     'name': "Lista de tareas",
 
-    'summary': """
-    Sencilla Lista de tareas""",
+    # Descripción corta que se mostrará debajo del nombre
+    'summary': "Módulo educativo para crear una lista de tareas simples",
 
+    # Descripción larga. Es útil para documentar el propósito del módulo.
     'description': """
-    Sencilla lista de tareas utilizadas para crear un nuevo módulo con un nuevo modelo de datos
+        Este módulo permite crear tareas con prioridad, urgencia calculada y estado de realización.
+        Ideal como primer proyecto de desarrollo en Odoo.
     """,
 
-    'author': "Sergi García",
-    'website': "https://apuntesfpinformatica.es",
-    #Indicamos que es una aplicación
+    # Autor del módulo (puede ser un nombre real, grupo de trabajo o entidad educativa)
+    'author': "Tu Nombre",
+
+    # Sitio web asociado (puede ser un portafolio, escuela o GitHub del proyecto)
+    'website': "https://tusitio.com",
+
+    # Esta línea indica que es una aplicación (aparecerá en la lista de Apps principales)
     'application': True,
 
-    # En la siguiente URL se indica que categorias pueden usarse
-    # https://github.com/odoo/odoo/blob/17.0/odoo/addons/base/data/ir_module_category_data.xml
-    # Vamos a utilizar la categoria Productivity
+    # Categoría a la que pertenece. Se usa para agrupar módulos en el App Store de Odoo.
     'category': 'Productivity',
+
+    # Versión del módulo (puedes usar 0.1 para proyectos educativos o de prueba)
     'version': '0.1',
 
-    # Indicamos lista de modulos necesarios para que este funcione correctamente
-    # En este ejemplo solo depende del modulo "base"
+    # Tipo de licencia. 'LGPL-3' es libre y compatible con los estándares de Odoo.
+    'license': 'LGPL-3',
+
+    # Si es True, el módulo puede instalarse desde la interfaz de Odoo
+    'installable': True,
+
+    # Lista de módulos de los que depende este para funcionar correctamente.
+    # 'base' es el mínimo necesario para que cualquier módulo funcione.
     'depends': ['base'],
 
-    # Esto siempre se carga
+    # Archivos que deben cargarse al instalar el módulo (vistas, seguridad, datos, etc.)
     'data': [
-        #El primer fichero indica la politica de acceso del modelo
-        #Mas información en https://www.odoo.com/documentation/17.0/es/developer/howtos/rdtraining/05_securityintro.html
+        # Permisos de acceso al modelo
         'security/ir.model.access.csv',
-        #Cargamos las vistas y las plantillas
+
+        # Archivo XML con las vistas, menús y acciones del modelo
         'views/views.xml',
     ]
 }
